@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+
+# the pin to control
+PIN=12
+
+
