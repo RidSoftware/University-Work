@@ -1,0 +1,3 @@
+Ring moved from A to C
+Ring moved from A to B
+Ring moved from C to B
