@@ -133,13 +133,9 @@ int main (void)
 
   // setup
 
-  *(gpio + 7) = 1 << (pinRED & 31) ; 
-  *(gpio + 7) = 1 << (pinYELLOW & 31) ; 
-  *(gpio + 7) = 1 << (pinGREEN & 31) ; 
 
-  // INLINED delay 
-  // !! should instanciate this once, and just call when needed !!
-  {
+  void sleeper(); {
+
     struct timespec sleeper, dummy ;
 
     // fprintf(stderr, "delaying by %d ms ...\n", howLong);
@@ -147,11 +143,21 @@ int main (void)
     sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
 
     nanosleep (&sleeper, &dummy) ;
+
   }
+
+
+  *(gpio + 7) = 1 << (pinRED & 31) ; 
+  *(gpio + 7) = 1 << (pinYELLOW & 31) ; 
+  *(gpio + 7) = 1 << (pinGREEN & 31) ; 
+
+  sleeper();
 
   *(gpio + 10) = 1 << (pinRED & 31) ; 
   *(gpio + 10) = 1 << (pinYELLOW & 31) ; 
   *(gpio + 10) = 1 << (pinGREEN & 31) ;   
+
+  sleeper();
 
   
   //r1 y0 g0
@@ -160,16 +166,7 @@ int main (void)
   *(gpio + 10) = 1 << (pinYELLOW & 31) ; 
   *(gpio + 10) = 1 << (pinGREEN & 31) ; 
 
-  // INLINED delay
-  {
-    struct timespec sleeper, dummy ;
-
-    // fprintf(stderr, "delaying by %d ms ...\n", howLong);
-    sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-    sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-    nanosleep (&sleeper, &dummy) ;
-  }
+  sleeper();
   
   //r1 y1 g0
 
@@ -177,16 +174,7 @@ int main (void)
   *(gpio + 7) = 1 << (pinYELLOW & 31) ; 
   *(gpio + 10) = 1 << (pinGREEN & 31) ; 
 
-  // INLINED delay
-  {
-    struct timespec sleeper, dummy ;
-
-    // fprintf(stderr, "delaying by %d ms ...\n", howLong);
-    sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-    sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-    nanosleep (&sleeper, &dummy) ;
-  }
+  sleeper();
 
   //r0 y0 g1
 
@@ -194,19 +182,10 @@ int main (void)
   *(gpio + 10) = 1 << (pinYELLOW & 31) ; 
   *(gpio + 7) = 1 << (pinGREEN & 31) ; 
 
-  // INLINED delay
-  {
-    struct timespec sleeper, dummy ;
-
-    // fprintf(stderr, "delaying by %d ms ...\n", howLong);
-    sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-    sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-    nanosleep (&sleeper, &dummy) ;
-  }
+  sleeper();
 
 
-  //trigger for button press
+  // -------------- //
 
 
   //r0 y0 g1 --still
@@ -215,16 +194,7 @@ int main (void)
   *(gpio + 10) = 1 << (pinYELLOW & 31) ; 
   *(gpio + 7) = 1 << (pinGREEN & 31) ; 
 
-  // INLINED delay
-  {
-    struct timespec sleeper, dummy ;
-
-    // fprintf(stderr, "delaying by %d ms ...\n", howLong);
-    sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-    sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-    nanosleep (&sleeper, &dummy) ;
-  }
+  sleeper();
 
   //r0 yblinking g0
 
@@ -232,8 +202,8 @@ int main (void)
 
   *(gpio + 10) = 1 << (pinGREEN & 31) ; 
 
-  // INLINED delay
-  for (j=0; j<1000; j++)
+  // loop for blinking yellow
+  for (j=0; j<10; j++)
   {
     theValue = ((j % 2) == 0) ? HIGH : LOW;
 
@@ -249,16 +219,7 @@ int main (void)
         exit(1);
        }
 
-    // INLINED delay
-    {
-      struct timespec sleeper, dummy ;
-
-      // fprintf(stderr, "delaying by %d ms ...\n", howLong);
-      sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-      sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-      nanosleep (&sleeper, &dummy) ;
-    }
+    sleeper();
   }
 
   //r1 y0 g0
@@ -267,16 +228,7 @@ int main (void)
   *(gpio + 10) = 1 << (pinYELLOW & 31) ; 
   *(gpio + 10) = 1 << (pinGREEN & 31) ; 
 
-  // INLINED delay
-  {
-    struct timespec sleeper, dummy ;
-
-    // fprintf(stderr, "delaying by %d ms ...\n", howLong);
-    sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-    sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-    nanosleep (&sleeper, &dummy) ;
-  }
+  sleeper();
 
 
 
@@ -311,6 +263,7 @@ int main (void)
   }
   */
  // Clean up: write LOW
+
  clrOff = 10; 
  *(gpio + clrOff) = 1 << (pinACT & 31) ;
  *(gpio + clrOff) = 1 << (pinRED & 31) ;
