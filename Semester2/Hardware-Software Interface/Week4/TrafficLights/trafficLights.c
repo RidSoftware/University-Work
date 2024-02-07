@@ -74,6 +74,22 @@ int failure (int fatal, const char *message, ...)
 /* HaWo: tinkering starts here */
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
+
+  //function for sleeping for the length of the delay macro in... Seconds?
+  void sleeper() {
+
+    struct timespec sleeper, dummy ;
+
+    // fprintf(stderr, "delaying by %d ms ...\n", howLong);
+    sleeper.tv_sec  = (time_t)(DELAY / 1000) ;
+    sleeper.tv_nsec = (long)(DELAY % 1000) * 1000000 ;
+
+    nanosleep (&sleeper, &dummy) ;
+
+  }
+
+
+
 int main (void)
 {
   int pinACT = ACT; // ,  pinLED = LED, pinButton = BUTTON;
@@ -132,19 +148,6 @@ int main (void)
  fprintf(stderr, "starting traffic lights ...\n");
 
   // setup
-
-
-  void sleeper(); {
-
-    struct timespec sleeper, dummy ;
-
-    // fprintf(stderr, "delaying by %d ms ...\n", howLong);
-    sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-    sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-    nanosleep (&sleeper, &dummy) ;
-
-  }
 
 
   *(gpio + 7) = 1 << (pinRED & 31) ; 
