@@ -159,7 +159,7 @@ int main (void)
 
   sleeper();
 
-  
+
   //r1 y0 g0
 
   *(gpio + 7) = 1 << (pinRED & 31) ; 
@@ -210,7 +210,7 @@ int main (void)
     if ((pinYELLOW & 0xFFFFFFC0 /* PI_GPIO_MASK */) == 0)	// bottom 64 pins belong to the Pi	
       {
         //GPSSET0/GPCLR0 required because there are only 32 pins on rpi2, and GPSET1/GPCLR1 covers pins 32-53
-	int off = (theValue == LOW) ? 10 : 7; // if the current loop value is LOW, set off to 11, else 8
+	int off = (theValue == LOW) ? 10 : 7; // if the current loop value is LOW, set off to 10, else 7
         *(gpio + off) = 1 << (pinYELLOW & 31) ; // 1<<(pinGREEN&31) adds a bitmask of 1 on the pinGREEN
       }
       else
