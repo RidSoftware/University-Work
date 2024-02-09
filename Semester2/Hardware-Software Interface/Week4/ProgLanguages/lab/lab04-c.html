@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Lab Week 4 - Hardware-Software Interface</title>
+<style type="text/css">
+body, h1, h2, h3, p, ul { padding: 0; }
+body {
+    background: white;
+    color: black;
+    max-width: 40em;
+    font: 12pt/1.2 "Liberation Serif", serif;
+    margin: 12pt;
+}
+h1 {
+    margin: 12pt 0;
+    font-size: 24pt;
+}
+h2 {
+    margin: 12pt 0 0 0;
+    font-size: 16pt;
+}
+h3 { font-size: 14pt; }
+h1, h2, h3 { font-weight: bold; }
+.module { font-weight: normal; }
+.author, h2, h3 { font-family: "Liberation Sans", sans-serif; }
+.author {
+    margin: 12pt 0;
+    font-size: 16pt;
+}
+.affil { font-size: 12pt; }
+p, ul {
+    margin: 6pt 0;
+}
+li {
+    margin: 6pt 0 6pt 20pt;
+}
+</style>
+<body>
+
+<h1><span class="module">Hardware-Software Interface</span><br>
+Lab Week 4</h1>
+
+<p class="author">Adam Sampson<br>
+<span class="affil">School of Mathematical and Computer Sciences, Heriot-Watt University</span></p>
+
+<h2>Introduction</h2>
+<p>In this exercise, you will write two C programs that make use of the
+file I/O facilities we saw in week 3's lectures.</p>
+<p>If you have any questions, please speak to the staff in the lab, or ask
+me by email &lt;<code>a.sampson@hw.ac.uk</code>&gt;.</p>
+<h2>Setup</h2>
+<p>Download <code>lab4.tar.gz</code> from Canvas, and unpack it. It contains two
+template programs, a <code>Makefile</code> to build them, and some sample input
+files. Both of these contain <code>TODO</code> comments that you need to replace
+with your own code.</p>
+<h2>merge</h2>
+<p><code>./merge A.txt B.txt out.txt</code> should merge two files <code>A.txt</code> and <code>B.txt</code>
+containing integers in ascending order, writing out a third file
+<code>out.txt</code> that contains all the input values in ascending order. For
+example:</p>
+<p>Input file <code>A.txt</code>: <code>1 3 4 7 9 11</code></p>
+<p>Input file <code>B.txt</code>: <code>2 5 6 8 10 12 13 14</code></p>
+<p>Output file: <code>1 2 3 4 5 6 7 8 9 10 11 12 13 14</code></p>
+<p>Note that you don't need to read all the input numbers into memory to do
+this &mdash; the template code shows how to do this by reading one
+number at a time.</p>
+<h2>count</h2>
+<p><code>./count input.txt</code> should do the same job as the Unix command
+<code>wc -c input.txt</code> &mdash; it counts the number of characters in the file
+it's given, and prints the result as a decimal number.</p>
+<h2>If you have time left over...</h2>
+<p>Once you've got <code>count</code> working, here are some more things you can try:</p>
+<ul>
+<li><code>wc -c</code> prints the input filename after the count. Make <code>count</code> do
+  this.</li>
+<li><code>wc -c</code> can take multiple input files, in which case it also prints a
+  total count at the end (try <code>wc -c count.c merge.c</code>). Make <code>count</code> do
+  this.</li>
+<li><code>wc -c</code>, if it's given no filenames at all or the filename <code>-</code>, counts
+  characters from standard input (C's <code>stdin</code>) rather than opening a
+  file. Make <code>count</code> do this.</li>
+<li><code>wc</code>, without the <code>-c</code> option, counts lines, words and characters.
+  Make <code>count</code> do this. You'll need to return multiple values from the
+  <code>count</code> function &mdash; the best way to do this is to pass the three
+  counter variables in as pointers.</li>
+<li>(Challenge!) Make <code>count</code> understand the <code>-c</code>, <code>-w</code> and <code>-l</code> options
+  in the same way as <code>wc</code>. You can write option-parsing code by hand,
+  but it's better to use the <code>getopt</code> standard library function &mdash;
+  <code>man 3 getopt</code> includes an example.</li>
+</ul></body>
+</html>
