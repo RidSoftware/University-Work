@@ -1,0 +1,101 @@
+Entities
+
+
+//strong entities
+Vehicle (
+	License_Plate_Number: string (9),	//pk
+	Home_Base: string (50),
+	Car_Type: enum,
+	Number_of_Seats: integer (1),
+	Engine_Size: float,
+	Engine_Type: string (50),
+	Cost_per_day: decimal (10, 2),
+	Current_Location: string (50),
+	Picture: binary object
+)
+
+Customer (
+	Mobile_Number: integer (11),		//pk
+	Date_of_Birth: date,
+	Age: integer (3),
+	Home_Address: string (50),
+	Email: string (50),
+	Name: enum,
+	Driving_License_Details: ???	//dunno what you mean
+
+
+)
+
+
+//weak entities
+Booking (
+	Booking_ID: string (50),		//pk
+	Location: enum,
+	Insurance_Extras: ???, 		//dunno what you mean
+	Rental_Date: date,		//assume date of booking needed
+	Rental_Length: integer ???,	//assume an int to represent days booked
+	Price: decimal (10, 2),
+	*License_Plate_Number: string (9),	//fk to Vehicle
+	*Mobile_Number: integer (11)		//fk to Customer
+)
+
+Servicing_Details (
+	Service_ID: string (50),		//pk
+	Start_date: date,
+	End date: date,
+	*License_Plate_Number: string (9)	//fk to Vehicle
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Attributes
+
+
+Customer.Name (
+	First_Name: string (50),
+	Last_Name: string (50)
+)
+
+Vehicle.Car_Type (
+	Small_Town_Car,
+	Family_Car,
+	MPY_7_seater,
+	Sports_Car,
+	Luxury,
+	Mini-Vans	
+)
+
+Booking.Location (
+	Start_Location: string (50),
+	End_Location: string (50)
+
+)
+Relationships
+
+Vehicle-to-Servicing_Details (
+	One-to-Many from Vehicle-to- Servicing_Details,
+	License_Plate_Number FK in Servicing_Details table
+	reference License_Plate_Number PK in Vehicle
+)
+
+Vehicle-to-Booking (
+	One-to-Many from Vehicle-to-Booking,
+	License_Plate_Number FK in Booking table
+	references License_Plate_Number PK in Vehicle
+)
+
+Customer-to-Booking (
+	One-to-Many from Customer-to-Booking,
+	Mobile_Number FK in Booking table
+	references Mobile_Number PK in Customer
+)
