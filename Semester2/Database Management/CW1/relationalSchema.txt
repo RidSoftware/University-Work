@@ -20,7 +20,8 @@ Customer (
 	Age: integer (3),
 	Home_Address: string (50),
 	Email: string (50),
-	Name: enum,
+	First_Name: string (50),	//comp attr
+	Last_Name: string (50),	
 	Driving_License_Details: ???	//dunno what you mean
 
 
@@ -30,7 +31,8 @@ Customer (
 //weak entities
 Booking (
 	Booking_ID: string (50),		//pk
-	Location: enum,
+	Start_Location: string (50),
+	End_Location: string (50),
 	Insurance_Extras: ???, 		//dunno what you mean
 	Rental_Date: date,		//assume date of booking needed
 	Rental_Length: integer ???,	//assume an int to represent days booked
@@ -48,23 +50,8 @@ Servicing_Details (
 
 
 
-
-
-
-
-
-
-
-
-
-
 Attributes
 
-
-Customer.Name (
-	First_Name: string (50),
-	Last_Name: string (50)
-)
 
 Vehicle.Car_Type (
 	Small_Town_Car,
@@ -75,11 +62,8 @@ Vehicle.Car_Type (
 	Mini-Vans	
 )
 
-Booking.Location (
-	Start_Location: string (50),
-	End_Location: string (50)
 
-)
+
 Relationships
 
 Vehicle-to-Servicing_Details (
