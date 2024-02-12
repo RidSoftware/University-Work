@@ -28,7 +28,7 @@ struct Image {
 void free_image(struct Image *img)
 {
     /* TODO: Question 2a */
-    
+    free(img);
 }
 
 /* Opens and reads an image file, returning a pointer to a new struct Image.
