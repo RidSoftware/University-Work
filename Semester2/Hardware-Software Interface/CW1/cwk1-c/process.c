@@ -19,12 +19,16 @@ struct Pixel {
 /* An image loaded from a file. */
 struct Image {
     /* TODO: Question 1 */
+    int width;
+    int height;
+    struct Pixel *Pixel;
 };
 
 /* Free a struct Image */
 void free_image(struct Image *img)
 {
     /* TODO: Question 2a */
+    
 }
 
 /* Opens and reads an image file, returning a pointer to a new struct Image.
