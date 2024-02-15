@@ -1,53 +1,62 @@
 Entities
 
 
-//strong entities
+//Strong Entities
 Vehicle (
-	License_Plate_Number: string (9),	//pk
-	Home_Base: string (50),
+	License_Plate_Number: string (9),	//PK
 	Car_Type: enum,
 	Number_of_Seats: integer (1),
 	Engine_Size: float,
-	Engine_Type: string (50),
+	Engine_Type: enum,		//!!Auto/Manual enum!!
 	Cost_per_day: decimal (10, 2),
 	Current_Location: string (50),
-	Picture: binary object
+	Picture: binary object,
+	*Home_Base: string (50)			//FK to Home_Base
 )
 
 Customer (
-	Mobile_Number: integer (11),		//pk
-	Date_of_Birth: date,
-	Age: integer (3),
+	Mobile_Number: integer (11),		//PK composite
+	Date_of_Birth: date,			//PK composite
+	Age: integer (3),			//derived from Date_of_Birth
 	Home_Address: string (50),
 	Email: string (50),
-	First_Name: string (50),	//comp attr
-	Last_Name: string (50),	
-	Driving_License_Details: ???	//dunno what you mean
+	First_Name: string (50),
+	Last_Name: string (50),
+	Driving_License_Details: boolean
+)
 
-
+Home_Base (
+	Base_ID: string (50),			//PK
+	Location: string (50)
 )
 
 
-//weak entities
+//Weak Entities
 Booking (
-	Booking_ID: string (50),		//pk
+	Booking_ID: string (50),		//PK
 	Start_Location: string (50),
 	End_Location: string (50),
-	Insurance_Extras: ???, 		//dunno what you mean
-	Rental_Date: date,		//assume date of booking needed
-	Rental_Length: integer ???,	//assume an int to represent days booked
-	Price: decimal (10, 2),
-	*License_Plate_Number: string (9),	//fk to Vehicle
-	*Mobile_Number: integer (11)		//fk to Customer
+	Insurance_Extras: boolean,
+	Rental_Start_Date: date,
+	Rental_End_Date: date,
+	Rental_Length: integer (3),		//derived from Rental_Start_Date & 								//Rental_End_Date, min(1)
+	Price: decimal (10, 2),		//derived from Vehicle.Cost_per_day & 							//Rental_Length
+	*License_Plate_Number: string (9),	//FK to Vehicle
+	*Mobile_Number: integer (11)		//FK to Customer
+
+)
+
+Additional_Drivers (
+	*Booking_ID: string (50),		//FK to Booking & comp PK
+	*Mobile_Number: integer (11),		//FK to Customer & comp PK
 )
 
 Servicing_Details (
-	Service_ID: string (50),		//pk
-	Start_date: date,
-	End date: date,
-	*License_Plate_Number: string (9)	//fk to Vehicle
+	Service_ID: string (50),		//PK
+	Start_Date: date,
+	End_Date: date,
+	*License_Plate_Number: string (9)	//FK to Vehicle
 )
-
 
 
 Attributes
@@ -62,12 +71,16 @@ Vehicle.Car_Type (
 	Mini-Vans	
 )
 
+Vehicle.Engine_Type (
+	Manual,
+	Automatic
+)
 
 
 Relationships
 
 Vehicle-to-Servicing_Details (
-	One-to-Many from Vehicle-to- Servicing_Details,
+	One-to-Many from Vehicle-to-Servicing_Details,
 	License_Plate_Number FK in Servicing_Details table
 	reference License_Plate_Number PK in Vehicle
 )
@@ -83,3 +96,21 @@ Customer-to-Booking (
 	Mobile_Number FK in Booking table
 	references Mobile_Number PK in Customer
 )
+
+Vehicle-to-Home_Base (
+	One-to-Many from Vehicle-to-Home_Base,
+	Home_Base FK in Vehicle table
+	references Base_ID PK in Home_Base
+)
+
+Booking-to-Additional_Drivers (
+	One-to-Many from Booking-to-Additional_Drivers
+	Booking_ID FK in Additional_Drivers
+	references Booking_ID PK in Booking
+)
+
+Additional_Drivers-to-Customer (
+	One-to-One,
+	Mobile_Number FK in Additional_Drivers
+	References PK in Customer
+
