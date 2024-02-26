@@ -44,6 +44,24 @@ struct Image *load_image(const char *filename)
 
     /* Allocate the Image object, and read the image from the file */
     /* TODO: Question 2b */
+
+
+
+
+
+
+
+
+    //error message on fscan failure for imag_type
+    char image_type[5];
+    if (fscan(f, "%5s", image_type) != 1) {
+        fprintf(stderr, "File Header couldn't be read %d\n", f);
+        fclose(f);
+        return NULL;
+    }
+
+
+
     struct Image *img = NULL;
 
     /* Close the file */
@@ -76,10 +94,16 @@ struct Image *copy_image(const struct Image *source)
  * (TODO: Write a better comment here, and rename the function.
  * You may need to add or change arguments depending on the task.)
  * Returns a new struct Image containing the result, or NULL on error. */
-struct Image *apply_BLUR(const struct Image *source)
+struct Image *apply_MEDIAN(const struct Image *source)
 {
     /* TODO: Question 3 */
     return NULL;
+
+    //pointer at a pixel changes colour value, to median of the 4 adjacent pixels, above/below/right/left
+    //excluding nonexistent pixels, when at edges
+
+
+
 }
 
 /* Perform your second task.
@@ -90,6 +114,12 @@ bool apply_NORM(const struct Image *source)
 {
     /* TODO: Question 4 */
     return false;
+
+    //scan for min and max for each colour values in the image
+    //subtract the offset minimums, to 0
+    //then multiply all values by a scaling factor so the max values are scaled to the max possible values
+
+
 }
 
 int main(int argc, char *argv[])
@@ -111,7 +141,7 @@ int main(int argc, char *argv[])
     }
 
     /* Apply the first process */
-    struct Image *out_img = apply_BLUR(in_img);
+    struct Image *out_img = apply_MEDIAN(in_img);
     if (out_img == NULL) {
         fprintf(stderr, "First process failed.\n");
         free_image(in_img);
