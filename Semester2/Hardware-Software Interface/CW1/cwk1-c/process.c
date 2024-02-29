@@ -11,9 +11,9 @@
 
 /* The RGB values of a pixel. */
 struct Pixel {
-    int red;
-    int green;
-    int blue;
+    char red[7];
+    char green[7];
+    char blue[7];
 };
 
 /* An image loaded from a file. */
@@ -21,7 +21,10 @@ struct Image {
     /* TODO: Question 1 */
     int width;
     int height;
-    struct Pixel *Pixel;
+    struct pixel *pixel = *(struct pixel*) malloc(100 * sizeof(struct pixel));
+
+    
+    
 };
 
 /* Free a struct Image */
@@ -44,7 +47,7 @@ struct Image *load_image(const char *filename)
 
     /* Allocate the Image object, and read the image from the file */
     /* TODO: Question 2b */
-
+    
 
 
 
