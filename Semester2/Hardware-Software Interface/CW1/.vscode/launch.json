@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "/home/calum/University-Work/Semester2/Hardware-Software Interface/CW1/cwk1-c",
+      "program": "/home/calum/University-Work/Semester2/Hardware-Software Interface/CW1/cwk1-c/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

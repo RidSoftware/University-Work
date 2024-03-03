@@ -20,6 +20,7 @@ struct Pixel {
 struct Image {
     /* TODO: Question 1 */
     //char format;
+    char file_type[3];
     int width;
     int height;
     struct Pixel *pixelArray;
@@ -36,6 +37,7 @@ void free_image(struct Image *img)
  * On error, prints an error message and returns NULL. */
 struct Image *load_image(const char *filename)
 {
+    fprintf(stdout, "->load_image initiated \n");
     /* Open the file for reading */
     FILE *f = fopen(filename, "rb");
     if (f == NULL) {
@@ -54,13 +56,12 @@ struct Image *load_image(const char *filename)
 
 
     //scans header
-    char image_type[10];
-    if (fscanf(f, "%9s", &image_type) != 1) {
+    if (fscanf(f, "%3s", &Image->file_type) != 1) {
         fprintf(stderr, "File Header couldn't be read %d\n", f);
         fclose(f);
         return NULL;
     }
-    fprintf(stdout, "Image Type %s\n", image_type);
+    fprintf(stdout, "Image Type %s\n", Image->file_type);
 
     if (fscanf(f, "%d", &Image->width) != 1) {
         fprintf(stderr, "File Width couldn't be read %d\n", f);
@@ -131,16 +132,15 @@ struct Image *load_image(const char *filename)
     //allocates space based on read header
     //Image.pixelArray = (struct Pixel)malloc();
 
-    struct Image *img = NULL;
 
     /* Close the file */
     fclose(f);
 
     if (Image == NULL) {
-        fprintf(stderr, "(tmp end)File %s could not be read.\n", filename);
+        fprintf(stderr, "File %s could not be read.\n", filename);
         return NULL;
     }
-
+    fprintf(stdout, "->load_image complete \n");
     return Image;
 }
 
@@ -158,7 +158,35 @@ void printPixelValues(struct Image *image) {
 /* Write img to file filename. Return true on success, false on error. */
 bool save_image(const struct Image *img, const char *filename)
 {
+    fprintf(stdout, "->save_image initiated \n");
     /* TODO: Question 2c */
+    //takes image structure and parses through as it writes data to a file using 
+    FILE *f = fopen(filename, "wb");
+    fprintf(stdout, "file opened successfully \n");
+    //fwrite(img->file_type, sizeof(img->file_type), 1, f);
+    fprintf(f, "%s\n", img->file_type);
+    fprintf(stdout, "file_type written: %s \n", img->file_type);
+    
+    fprintf(f, "%d ", img->width);
+    fprintf(stdout, "width written: %d \n", img->width);
+    
+    fprintf(f, "%d", img->height);
+    fprintf(stdout, "height written: %d \n", img->height);
+    //this is shoddily put together, must be made robust ^^^^
+
+//  fprintf(NameOfFilePointer, "%d", myIntegerVariableName);
+//  ^^^^^^^
+//  optimal data writing format for non-binary/ascii data
+//  as fwrite is explicitly for binary data
+//  similar to fscan/fread paradigm
+
+
+
+
+    fclose(f);
+
+    //implement error returns on wites and saves
+    fprintf(stdout, "->save_image complete \n");
     return false;
 }
 
@@ -220,6 +248,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    if (!save_image(in_img, "tmpImage.hs8")) {
+        fprintf(stderr, "saving image failed \n");
+    }
+    
     // printPixelValues(in_img);
 
     /* Apply the first process */
