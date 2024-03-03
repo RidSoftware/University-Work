@@ -11,20 +11,18 @@
 
 /* The RGB values of a pixel. */
 struct Pixel {
-    char red[7];
-    char green[7];
-    char blue[7];
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
 };
 
 /* An image loaded from a file. */
 struct Image {
     /* TODO: Question 1 */
+    //char format;
     int width;
     int height;
-    struct pixel *pixel = *(struct pixel*) malloc(100 * sizeof(struct pixel));
-
-    
-    
+    struct Pixel *pixelArray;
 };
 
 /* Free a struct Image */
@@ -39,7 +37,7 @@ void free_image(struct Image *img)
 struct Image *load_image(const char *filename)
 {
     /* Open the file for reading */
-    FILE *f = fopen(filename, "r");
+    FILE *f = fopen(filename, "rb");
     if (f == NULL) {
         fprintf(stderr, "File %s could not be opened.\n", filename);
         return NULL;
@@ -47,36 +45,115 @@ struct Image *load_image(const char *filename)
 
     /* Allocate the Image object, and read the image from the file */
     /* TODO: Question 2b */
-    
+    struct Image *Image = malloc(sizeof(struct Image));
+    if (Image == NULL) {
+        fprintf(stderr, "Image failed to allocate memory");
 
-
-
-
-
-
-
-    //error message on fscan failure for imag_type
-    char image_type[5];
-    if (fscan(f, "%5s", image_type) != 1) {
-        fprintf(stderr, "File Header couldn't be read %d\n", f);
-        fclose(f);
         return NULL;
     }
 
 
+    //scans header
+    char image_type[10];
+    if (fscanf(f, "%9s", &image_type) != 1) {
+        fprintf(stderr, "File Header couldn't be read %d\n", f);
+        fclose(f);
+        return NULL;
+    }
+    fprintf(stdout, "Image Type %s\n", image_type);
+
+    if (fscanf(f, "%d", &Image->width) != 1) {
+        fprintf(stderr, "File Width couldn't be read %d\n", f);
+        fclose(f);
+        return NULL;
+    }
+    fprintf(stdout, "Image Width %d\n", Image->width);
+
+    if (fscanf(f, "%d", &Image->height) != 1) {
+        fprintf(stderr, "File Height couldn't be read %d\n", f);
+        fclose(f);
+        return NULL;
+    }
+    fprintf(stdout, "Image Height %d\n", Image->height);
+
+    //kills \n's
+    fgetc(f);
+
+    //allocates memory dynamically based off of header values
+    Image->pixelArray = (struct Pixel *)malloc(Image->width * Image->height * sizeof(struct Pixel));
+    if (Image->pixelArray == NULL) {
+        // Handle memory allocation failure
+        fprintf(stderr, "PixelArray failed to allocate memory");
+        free(Image); // Free previously allocated memory
+        return NULL;
+    }
+
+
+    //attempt to assign pixels from fread
+    for (int i = 0; i < (Image->height * Image->width); i++) {
+        if (fread(&Image->pixelArray[i].red, sizeof(unsigned char), 1, f) != 1 ||
+            fread(&Image->pixelArray[i].green, sizeof(unsigned char), 1, f) != 1 ||
+            fread(&Image->pixelArray[i].blue, sizeof(unsigned char), 1, f) != 1) {
+            fprintf(stderr, "Error reading pixel data.\n");
+            fclose(f);
+            free(Image->pixelArray); // Free allocated memory
+            free(Image);             // Free allocated memory
+            return NULL;
+        }
+    }
+
+
+/*
+    char data[9];
+    size_t bytes_read;
+    for (int i = 0; i <3; i++) {
+        bytes_read = fread(data, 1, 8, f);
+        if (bytes_read != 8) {
+            fprintf(stdout, "error reading line %d \n", i + 1);
+            break;
+    }
+    data[8] = '\0';
+    fprintf(stdout, "Line %d: %s\n", i+1, data);    
+}
+*/
+/*
+    if (fread(&data, sizeof(unsigned char), 1, f) != 8) {
+        fprintf(stderr, "File data couldn't be read %d\n", f);
+        fclose(f);
+        return(NULL);
+    }
+    for (int i = 7; i >= 0; i--) {
+        printf("%d \n", (data >> i) & 1);
+    }
+*/
+
+
+    //allocates space based on read header
+    //Image.pixelArray = (struct Pixel)malloc();
 
     struct Image *img = NULL;
 
     /* Close the file */
     fclose(f);
 
-    if (img == NULL) {
-        fprintf(stderr, "File %s could not be read.\n", filename);
+    if (Image == NULL) {
+        fprintf(stderr, "(tmp end)File %s could not be read.\n", filename);
         return NULL;
     }
 
-    return img;
+    return Image;
 }
+
+/*
+void printPixelValues(struct Image *image) {
+    for (int i = 0; i < (image->height * image->width); i++) {
+        printf("Pixel:%d-R%dG%dB%d\n",
+               i+1, image->pixelArray[i].red,
+               image->pixelArray[i].green, image->pixelArray[i].blue);
+    }
+}
+*/
+
 
 /* Write img to file filename. Return true on success, false on error. */
 bool save_image(const struct Image *img, const char *filename)
@@ -142,6 +219,8 @@ int main(int argc, char *argv[])
     if (in_img == NULL) {
         return 1;
     }
+
+    // printPixelValues(in_img);
 
     /* Apply the first process */
     struct Image *out_img = apply_MEDIAN(in_img);
