@@ -57,21 +57,21 @@ struct Image *load_image(const char *filename)
 
     //scans header
     if (fscanf(f, "%3s", &Image->file_type) != 1) {
-        fprintf(stderr, "File Header couldn't be read %d\n", f);
+        fprintf(stderr, "File Header couldn't be read %s\n", filename);
         fclose(f);
         return NULL;
     }
     fprintf(stdout, "Image Type %s\n", Image->file_type);
 
     if (fscanf(f, "%d", &Image->width) != 1) {
-        fprintf(stderr, "File Width couldn't be read %d\n", f);
+        fprintf(stderr, "File Width couldn't be read %s\n", filename);
         fclose(f);
         return NULL;
     }
     fprintf(stdout, "Image Width %d\n", Image->width);
 
     if (fscanf(f, "%d", &Image->height) != 1) {
-        fprintf(stderr, "File Height couldn't be read %d\n", f);
+        fprintf(stderr, "File Height couldn't be read %s\n", filename);
         fclose(f);
         return NULL;
     }
@@ -163,14 +163,14 @@ bool save_image(const struct Image *img, const char *filename)
     //takes image structure and parses through as it writes data to a file using 
     FILE *f = fopen(filename, "wb");
     fprintf(stdout, "file opened successfully \n");
-    //fwrite(img->file_type, sizeof(img->file_type), 1, f);
+    
     fprintf(f, "%s\n", img->file_type);
     fprintf(stdout, "file_type written: %s \n", img->file_type);
     
     fprintf(f, "%d ", img->width);
     fprintf(stdout, "width written: %d \n", img->width);
     
-    fprintf(f, "%d", img->height);
+    fprintf(f, "%d\n", img->height);
     fprintf(stdout, "height written: %d \n", img->height);
     //this is shoddily put together, must be made robust ^^^^
 
@@ -180,14 +180,36 @@ bool save_image(const struct Image *img, const char *filename)
 //  as fwrite is explicitly for binary data
 //  similar to fscan/fread paradigm
 
+    //now the grunt work: writing binary data from IMAGE struct with fwrite
+    /* ATTEMPT1, with fwrite
+    for (int i = 0; i < (img->width * img->height); i++) {
+        fprintf(stdout, "pixel:%d \n", i);
+        fwrite(img->pixelArray[i].red, sizeof(unsigned char), 1, f);
+        fprintf(stdout, "pixel:%d \n", i);
+        fwrite(img->pixelArray[i].blue, sizeof(unsigned char), 1, f);
+        fwrite(img->pixelArray[i].green, sizeof(unsigned char), 1, f);
+    }
+    */
+   
+   // ATTEMPT2, uses fprintf to print decimals
+    for (int i = 0; i < (img->width * img->height); i++) {
+        if (fprintf(f, "%c", img->pixelArray[i].red) != 1 ||
+        fprintf(f, "%c", img->pixelArray[i].green) != 1 ||
+        fprintf(f, "%c", img->pixelArray[i].blue) != 1 ) {
 
+        fprintf(stderr, "failed to save pixel data on pixel:%d \n", i);
+        return false;
+        }
+    }
+
+    // PIXEL DATA IS CONVERTED TO CHARACTERS OF DECIMAL INTS, THUS I NEED TO EITHER CAST THEM HERE  OR  
 
 
     fclose(f);
 
     //implement error returns on wites and saves
     fprintf(stdout, "->save_image complete \n");
-    return false;
+    return true;
 }
 
 /* Allocate a new struct Image and copy an existing struct Image's contents
@@ -195,6 +217,21 @@ bool save_image(const struct Image *img, const char *filename)
 struct Image *copy_image(const struct Image *source)
 {
     /* TODO: Question 2d */
+    struct Image *img_copy = malloc(sizeof(*source));
+    
+    img_copy = source;
+
+    img_copy->pixelArray = (struct Pixel *)malloc(sizeof(source->pixelArray));
+
+    for (int i = 0; i < (img_copy->width * img_copy->height); i++){
+        img_copy->pixelArray[i].red = source->pixelArray[i].red;
+        //fprintf(stdout, "red%d: %c, %c \n", i, img_copy->pixelArray[i].red, source->pixelArray[i].red);
+
+    }
+
+
+    free(img_copy);
+    free(img_copy->pixelArray);
     return NULL;
 }
 
@@ -248,11 +285,17 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    if (!save_image(in_img, "tmpImage.hs8")) {
+    if (!save_image(in_img, argv[2])) {
         fprintf(stderr, "saving image failed \n");
     }
     
     // printPixelValues(in_img);
+
+    copy_image(in_img);
+
+
+
+
 
     /* Apply the first process */
     struct Image *out_img = apply_MEDIAN(in_img);
