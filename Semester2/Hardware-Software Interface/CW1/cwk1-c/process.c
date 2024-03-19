@@ -22,7 +22,7 @@ struct Pixel {
 
 /* An image loaded from a file. */
 struct Image {
-    char file_type[3];
+    char file_type[4];
     int width;
     int height;
     struct Pixel *pixelArray;

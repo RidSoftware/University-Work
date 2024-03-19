@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <help_text>Space for diagram notes</help_text>
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>602</x>
+      <y>168</y>
+      <w>259</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>Customer
+--
+- customerID: string
+- name: string
+- dateOfBirth: date
+- address: string
+- mobileNumber: string
+- email: string
+- drivingLicense: DrivingLicense
+- creditCard: CreditCard
+--
++ create(customerID: string, name: string, 
+dateOfBirth: date, address: string, 
+mobileNumber: string, email: string, 
+drivingLicense: DrivingLicense, 
+creditCard: CreditCard)
+--
+Responsibilities
+-- Represent a customer in the system.
+-- Store and manage customer details.
+-- Provide methods to access customer information.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>602</x>
+      <y>441</y>
+      <w>259</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>Vehicle
+--
+- registrationNumber: string
+- currentMileage: int
+- category: VehicleCategory
+- color: string
+- status: RentalStatus
+--
++ create(registrationNumber: string, 
+currentMileage: string, category: string,
+colour: string, status: string)
+--
+Responsibilities
+-- Represent a vehicle in the system.
+-- Store and manage vehicle details.
+-- Provide methods to access vehicle information.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>273</x>
+      <y>273</y>
+      <w>245</w>
+      <h>203</h>
+    </coordinates>
+    <panel_attributes>RentalRecord
+--
+- rentalID: string
+- customer: Customer
+- vehicle: Vehicle
+- startDate: date
+- endDate: date
+- inspectionDetails: string
+--
++ create(rentalID: string,
+customer: Customer, vehicle: Vehicle,
+startDate: date, endDate: date
+inspectionDetails: string)
++ archiveRecord()
+--
+Responsibilities
+-- Represent a rental record in the system.
+-- Store and manage rental details.
+-- Provide methods to access rental information.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>903</x>
+      <y>154</y>
+      <w>287</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>DrivingLicense
+--
+- licenseNumber: string
+- category: string
+- expiryDate: date
+--
++ create(licenseNumber: string, 
+category: string, expiryDate: date)
++ validateLicense()
+--
+Responsibilities
+-- Represent a driving license in the system.
+-- Store and manage driving license details.
+-- Provide methods to access driving license information.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>903</x>
+      <y>308</y>
+      <w>273</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>CreditCard
+--
+- cardNumber: string
+- expiryDate: date
+- securityCode: string
+--
++ create(cardNumber: string, 
+currentDate: date, securityCode: string)
++ validateCC()
+--
+Responsibilities
+-- Represent a credit card in the system.
+-- Store and manage credit card details.
+-- Provide methods to access credit card information.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>854</x>
+      <y>168</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>854</x>
+      <y>322</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>511</x>
+      <y>280</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+&lt; submits</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>511</x>
+      <y>448</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+hires &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+</diagram>
