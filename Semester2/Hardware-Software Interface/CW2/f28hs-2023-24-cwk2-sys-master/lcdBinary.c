@@ -52,24 +52,64 @@ int failure (int fatal, const char *message, ...);
 // -----------------------------------------------------------------------------
 // Functions to implement here (or directly in master-mind.c)
 
-/* this version needs gpio as argument, because it is in a separate file */
-void digitalWrite (uint32_t *gpio, int pin, int value) {
-  /* ***  COMPLETE the code here, using inline Assembler  ***  */
+/* send a @value@ (LOW or HIGH) on pin number @pin@; @gpio@ is the mmaped GPIO base address */
+void digitalWrite (uint32_t *gpio, int pin, int value){
+    
+    if (value = HIGH) {
+      *(gpio + 7) = 1 << (pin & 31) ;
+    } else if (value = LOW) {
+      *(gpio + 10) = 1 << (pin & 31) ;
+    } //space for err handling
+  
 }
 
-// adapted from setPinMode
-void pinMode(uint32_t *gpio, int pin, int mode /*, int fSel, int shift */) {
-  /* ***  COMPLETE the code here, using inline Assembler  ***  */
+/* set the @mode@ of a GPIO @pin@ to INPUT or OUTPUT; @gpio@ is the mmaped GPIO base address */
+void pinMode(uint32_t *gpio, int pin, int mode){
+  
+  int fsel = 0;
+  while (pin % 10 == 0)
+  {
+    pin = pin - 10;
+    fsel++;
+  }
+  int shift = pin * 3;
+
+  if (mode = OUTPUT) {
+    *(gpio + fsel) = (*(gpio + fsel) & ~(7 << shift)) | (1 << shift);
+  } else if (mode = INPUT) {
+    *(gpio + fsel) = (*(gpio + fsel) & ~(7 << shift)) | (1 << shift);
+  } //space for err handling
+
 }
 
-void writeLED(uint32_t *gpio, int led, int value) {
-  /* ***  COMPLETE the code here, using inline Assembler  ***  */
+/* send a @value@ (LOW or HIGH) on pin number @pin@; @gpio@ is the mmaped GPIO base address */
+/* can use digitalWrite(), depending on your implementation */
+void writeLED(uint32_t *gpio, int led, int value){
+
+  digitalWrite (gpio, led, value);
+
 }
 
+/* read a @value@ (LOW or HIGH) from pin number @pin@ (a button device); @gpio@ is the mmaped GPIO base address */
 int readButton(uint32_t *gpio, int button) {
-  /* ***  COMPLETE the code here, using inline Assembler  ***  */
+
+  if (*(gpio + 13) & (1 << (button & 31)) != 0) {
+    return HIGH;
+  } else {
+    return LOW;
+  }
+
 }
 
-void waitForButton(uint32_t *gpio, int button) {
-  /* ***  COMPLETE the code here, just C no Assembler; you can use readButton ***  */
+/* wait for a button input on pin number @button@; @gpio@ is the mmaped GPIO base address */
+/* can use readButton(), depending on your implementation */
+void waitForButton (uint32_t *gpio, int button) {
+
+  while(1) {
+    if (readButton(gpio, button)) {
+      break;
+    }
+    delay(1);
+  }
+
 }

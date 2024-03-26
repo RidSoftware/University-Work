@@ -98,11 +98,10 @@ LIMIT 1;
 
 
 #question 11
-SELECT SUBSTRING_INDEX(name, ' ', -1) AS surname
+SELECT name
 FROM imdb_actors
 JOIN imdb_movies2actors ON imdb_actors.actorid = imdb_movies2actors.actorid
 JOIN imdb_movies2directors ON imdb_movies2actors.movieid = imdb_movies2directors.movieid
-GROUP BY imdb_actors.actorid
 HAVING COUNT(DISTINCT imdb_movies2directors.genre) >= 10;
 
 
@@ -120,7 +119,7 @@ SELECT CONCAT(FLOOR(imdb_movies.year / 10) * 10, '-', FLOOR(imdb_movies.year / 1
 FROM imdb_movies
 JOIN imdb_ratings ON imdb_movies.movieid = imdb_ratings.movieid
 GROUP BY FLOOR(imdb_movies.year / 10)
-ORDER BY AVG(imdb_ratings.rank) ASC
+ORDER BY AVG(imdb_ratings.rank) DESC
 LIMIT 1;
 
 

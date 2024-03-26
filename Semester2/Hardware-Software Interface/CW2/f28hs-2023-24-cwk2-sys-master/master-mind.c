@@ -226,21 +226,66 @@ void waitForButton (uint32_t *gpio, int button);
 /* These are just prototypes; you need to complete the code for each function */
 
 /* send a @value@ (LOW or HIGH) on pin number @pin@; @gpio@ is the mmaped GPIO base address */
-void digitalWrite (uint32_t *gpio, int pin, int value);
+void digitalWrite (uint32_t *gpio, int pin, int value){
+    
+    if (value = HIGH) {
+      *(gpio + 7) = 1 << (pin & 31) ;
+    } else if (value = LOW) {
+      *(gpio + 10) = 1 << (pin & 31) ;
+    } //space for err handling
+  
+}
 
 /* set the @mode@ of a GPIO @pin@ to INPUT or OUTPUT; @gpio@ is the mmaped GPIO base address */
-void pinMode(uint32_t *gpio, int pin, int mode);
+void pinMode(uint32_t *gpio, int pin, int mode){
+  
+  int fsel = 0;
+  while (pin % 10 == 0)
+  {
+    pin = pin - 10;
+    fsel++;
+  }
+  int shift = pin * 3;
+
+  if (mode = OUTPUT) {
+    *(gpio + fsel) = (*(gpio + fsel) & ~(7 << shift)) | (1 << shift);
+  } else if (mode = INPUT) {
+    *(gpio + fsel) = (*(gpio + fsel) & ~(7 << shift)) | (1 << shift);
+  } //space for err handling
+
+}
 
 /* send a @value@ (LOW or HIGH) on pin number @pin@; @gpio@ is the mmaped GPIO base address */
 /* can use digitalWrite(), depending on your implementation */
-void writeLED(uint32_t *gpio, int led, int value);
+void writeLED(uint32_t *gpio, int led, int value){
+
+  digitalWrite (gpio, led, value);
+
+}
 
 /* read a @value@ (LOW or HIGH) from pin number @pin@ (a button device); @gpio@ is the mmaped GPIO base address */
-int readButton(uint32_t *gpio, int button);
+int readButton(uint32_t *gpio, int button) {
+
+  if (*(gpio + 13) & (1 << (button & 31)) != 0) {
+    return HIGH;
+  } else {
+    return LOW;
+  }
+
+}
 
 /* wait for a button input on pin number @button@; @gpio@ is the mmaped GPIO base address */
 /* can use readButton(), depending on your implementation */
-void waitForButton (uint32_t *gpio, int button);
+void waitForButton (uint32_t *gpio, int button) {
+
+  while(1) {
+    if (readButton(gpio, button)) {
+      break;
+    }
+    delay(1);
+  }
+
+}
 
 /* ======================================================= */
 /* SECTION: game logic                                     */
@@ -255,11 +300,21 @@ void waitForButton (uint32_t *gpio, int button);
 /* initialise the secret sequence; by default it should be a random sequence */
 void initSeq() {
   /* ***  COMPLETE the code here  ***  */
+  theSeq[seqlen-1];
+
+  for (int i = 0; i < seqlen; i++) {
+    theSeq[i] = rand() % colors + 1;
+  }
+
+  *seq1 = theSeq;
+
 }
 
 /* display the sequence on the terminal window, using the format from the sample run in the spec */
 void showSeq(int *seq) {
   /* ***  COMPLETE the code here  ***  */
+  fprintf(stdout, "Secret: %d %d %d\n", *seq, *(seq + 1), *(seq + 2));
+
 }
 
 #define NAN1 8
@@ -270,17 +325,37 @@ void showSeq(int *seq) {
 /* or as a pointer to a pair of values */
 int /* or int* */ countMatches(int *seq1, int *seq2) {
   /* ***  COMPLETE the code here  ***  */
+  int matches[1];
+  
+  for (int i=0; i<seqlen; i++) {
+    if (seq1[i] == seq2[i]) { matches[0]++; } 
+    for (int j=0; j<seqlen; i++) {
+      if (j==i | seq1[i]==seq2[i]) {
+        continue;
+      }else{
+        matches[1]++;
+      }
+    }
+  }
+
+  return matches;
+  
 }
 
 /* show the results from calling countMatches on seq1 and seq1 */
 void showMatches(int /* or int* */ code, /* only for debugging */ int *seq1, int *seq2, /* optional, to control layout */ int lcd_format) {
   /* ***  COMPLETE the code here  ***  */
+  int matches[] = countMatches(seq1, seq2);
+
+  fprintf(stdout, "%d %d\n", matches[0], matches[1]);
+
 }
 
 /* parse an integer value as a list of digits, and put them into @seq@ */
 /* needed for processing command-line with options -s or -u            */
 void readSeq(int *seq, int val) {
   /* ***  COMPLETE the code here  ***  */
+  
 }
 
 /* read a guess sequence fron stdin and store the values in arr */

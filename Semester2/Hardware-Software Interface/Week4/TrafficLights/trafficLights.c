@@ -136,7 +136,7 @@ int main (void)
   shift =  3;  // GPIO 11 sits in slot 3 of register 1, thus shift by 1*3 (3 bits per pin)
   *(gpio + fSel) = (*(gpio + fSel) & ~(7 << shift)) | (1 << shift) ;  // Sets bits to one = output
   
-    fprintf(stderr, "setting RED pin %d to %d ...\n", pinRED, OUTPUT);
+  fprintf(stderr, "setting RED pin %d to %d ...\n", pinRED, OUTPUT);
   fSel =  1;    // GPIO 13 lives in register 1 (GPFSEL)
   shift =  9;  // GPIO 13 sits in slot 9 of register 1, thus shift by 3*3 (3 bits per pin)
   *(gpio + fSel) = (*(gpio + fSel) & ~(7 << shift)) | (1 << shift) ;  // Sets bits to one = output
