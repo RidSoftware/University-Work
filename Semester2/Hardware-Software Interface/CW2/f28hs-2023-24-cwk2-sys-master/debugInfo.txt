@@ -1,0 +1,11 @@
+void initSeq() {
+  /* ***  COMPLETE the code here  ***  */
+  theSeq[seqlen-1];
+
+  for (int i = 0; i < seqlen; i++) {
+    theSeq[i] = rand() % colors + 1;
+  }
+
+  *seq1 = theSeq;
+
+}

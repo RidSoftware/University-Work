@@ -228,9 +228,11 @@ void waitForButton (uint32_t *gpio, int button);
 /* send a @value@ (LOW or HIGH) on pin number @pin@; @gpio@ is the mmaped GPIO base address */
 void digitalWrite (uint32_t *gpio, int pin, int value){
     
-    if (value = HIGH) {
+    fprintf(stdout, "gpio: %d, pin: %d, value: %d\n", gpio, pin, value);
+    
+    if (value == 1) {
       *(gpio + 7) = 1 << (pin & 31) ;
-    } else if (value = LOW) {
+    } else if (value == 0) {
       *(gpio + 10) = 1 << (pin & 31) ;
     } //space for err handling
   
@@ -242,14 +244,14 @@ void pinMode(uint32_t *gpio, int pin, int mode){
   int fsel = 0;
   while (pin % 10 == 0)
   {
-    pin = pin - 10;
+    pin -= 10;
     fsel++;
   }
   int shift = pin * 3;
 
-  if (mode = OUTPUT) {
+  if (mode == OUTPUT) {
     *(gpio + fsel) = (*(gpio + fsel) & ~(7 << shift)) | (1 << shift);
-  } else if (mode = INPUT) {
+  } else if (mode == INPUT) {
     *(gpio + fsel) = (*(gpio + fsel) & ~(7 << shift)) | (1 << shift);
   } //space for err handling
 
@@ -300,13 +302,26 @@ void waitForButton (uint32_t *gpio, int button) {
 /* initialise the secret sequence; by default it should be a random sequence */
 void initSeq() {
   /* ***  COMPLETE the code here  ***  */
-  theSeq[seqlen-1];
+  *seq1 = (int *)malloc(sizeof(int) * seqlen);
+    if (seq1 == NULL) {
+        fprintf(stderr, "memory allocation for matches failed\n");
+      }
 
   for (int i = 0; i < seqlen; i++) {
-    theSeq[i] = rand() % colors + 1;
+    *(seq1 + i) = rand() % colors + 1;
+    fprintf(stdout, "%d\n", *(seq1 + i));
   }
-
-  *seq1 = theSeq;
+  
+  
+  theSeq = (int *)malloc(sizeof(seq1));
+    if (theSeq == NULL) {
+      fprintf(stderr, "failed to allocate memory to theSeq int initSeq() \n");
+    }
+  for (int i=0; i<seqlen; i++) {
+      theSeq[i] = seq1[i];
+  }
+  
+  
 
 }
 
@@ -325,7 +340,10 @@ void showSeq(int *seq) {
 /* or as a pointer to a pair of values */
 int /* or int* */ countMatches(int *seq1, int *seq2) {
   /* ***  COMPLETE the code here  ***  */
-  int matches[1];
+  int *matches = (int *) malloc(2 * sizeof(int));
+    if (matches == NULL) {
+      fprintf(stderr, "memory allocation for matches failed\n");
+    }
   
   for (int i=0; i<seqlen; i++) {
     if (seq1[i] == seq2[i]) { matches[0]++; } 
@@ -345,7 +363,7 @@ int /* or int* */ countMatches(int *seq1, int *seq2) {
 /* show the results from calling countMatches on seq1 and seq1 */
 void showMatches(int /* or int* */ code, /* only for debugging */ int *seq1, int *seq2, /* optional, to control layout */ int lcd_format) {
   /* ***  COMPLETE the code here  ***  */
-  int matches[] = countMatches(seq1, seq2);
+  int *matches = countMatches(seq1, seq2);
 
   fprintf(stdout, "%d %d\n", matches[0], matches[1]);
 
@@ -356,12 +374,27 @@ void showMatches(int /* or int* */ code, /* only for debugging */ int *seq1, int
 void readSeq(int *seq, int val) {
   /* ***  COMPLETE the code here  ***  */
   
+  while (val % 100 == 0)
+  {
+    val -= 100;
+    seq1[0]++;
+  }
+  
+  while (val % 10 == 0)
+  {
+    val -= 10;
+    seq1[1]++;
+  }
+  
+  seq1[2] = val;
+  
 }
 
 /* read a guess sequence fron stdin and store the values in arr */
 /* only needed for testing the game logic, without button input */
 int readNum(int max) {
   /* ***  COMPLETE the code here  ***  */
+  
 }
 
 /* ======================================================= */
@@ -849,7 +882,8 @@ int main (int argc, char *argv[])
   attSeq = (int*) malloc(seqlen*sizeof(int));
   cpy1 = (int*)malloc(seqlen*sizeof(int));
   cpy2 = (int*)malloc(seqlen*sizeof(int));
-
+  
+  
   // -----------------------------------------------------------------------------
   // constants for RPi2
   gpiobase = 0x3F200000 ;
@@ -889,6 +923,7 @@ int main (int argc, char *argv[])
   lcd->cx      = 0 ;     // x-pos of cursor
   lcd->cy      = 0 ;     // y-pos of curosr
 
+
   lcd->dataPins [0] = DATA0_PIN ;
   lcd->dataPins [1] = DATA1_PIN ;
   lcd->dataPins [2] = DATA2_PIN ;
@@ -899,16 +934,18 @@ int main (int argc, char *argv[])
   // lcd->dataPins [7] = d7 ;
 
   // lcds [lcdFd] = lcd ;
-
+/*          KILLED THIS BECAUSE LCD NOT IMPLEMENTED
   digitalWrite (gpio, lcd->rsPin,   0) ; pinMode (gpio, lcd->rsPin,   OUTPUT) ;
   digitalWrite (gpio, lcd->strbPin, 0) ; pinMode (gpio, lcd->strbPin, OUTPUT) ;
 
   for (i = 0 ; i < bits ; ++i)
   {
-    digitalWrite (gpio, lcd->dataPins [i], 0) ;
-    pinMode      (gpio, lcd->dataPins [i], OUTPUT) ;
+    digitalWrite (gpio, lcd->dataPins[i], 0) ;
+    pinMode (gpio, lcd->dataPins[i], OUTPUT) ;
   }
+
   delay (35) ; // mS
+*/
 
 // Gordon Henderson's explanation of this part of the init code (from wiringPi):
 // 4-bit mode?
@@ -945,6 +982,7 @@ int main (int argc, char *argv[])
     lcdPutCommand  (lcd, func     ) ; delay (35) ;
   }
 
+
   if (lcd->rows > 1)
   {
     func |= LCD_FUNC_N ;
@@ -980,7 +1018,7 @@ int main (int argc, char *argv[])
   // +++++ main loop
   while (!found) {
     attempts++;
-
+    showSeq(theSeq);
     /* ******************************************************* */
     /* ***  COMPLETE the code here  ***                        */
     /* this needs to implement the main loop of the game:      */
@@ -990,11 +1028,28 @@ int main (int argc, char *argv[])
     /* show the result                                         */
     /* see CW spec for details                                 */
     /* ******************************************************* */
+    
+    //timer implmentation required for further work on main    
+      
+      waitForButton(gpio, BUTTON);
+    
+    
+    
+    break;
   }
   if (found) {
       /* ***  COMPLETE the code here  ***  */
   } else {
     fprintf(stdout, "Sequence not found\n");
   }
+
+  
+  
+  free(theSeq);
+  free(seq1);
+  free(seq2);
+
+  //
+
   return 0;
 }
