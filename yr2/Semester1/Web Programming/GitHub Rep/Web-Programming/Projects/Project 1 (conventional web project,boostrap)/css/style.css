@@ -1,0 +1,27 @@
+:root {
+    /* colour pallete */
+    --raisinBlack: #232020;
+    --roseEbony: #553739;
+    --rawUmber: #955E42;
+    --mossYellow: #9C914F ;
+    --mossGreen: #748E54;
+
+}
+
+body {
+    font-family: 'Arial', serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--raisinBlack);
+    color: var(--mossYellow);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: white;
+}
