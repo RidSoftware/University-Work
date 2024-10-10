@@ -1,0 +1,47 @@
+Oct 04 09:56:25.235 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Oct 04 09:56:25.235 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 51221.
+Oct 04 09:56:25.243 HYPERVISOR: exec_cmd: hypervisor version 
+Oct 04 09:56:25.243 HYPERVISOR: exec_cmd: hypervisor working_dir /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/Lab3/project-files/dynamips 
+Oct 04 09:56:25.243 GENERAL: working_dir=/home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/Lab3/project-files/dynamips
+Oct 04 09:56:25.243 HYPERVISOR: exec_cmd: hypervisor working_dir /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/Lab3/project-files/dynamips/c9c56dfa-5fe2-43fe-8285-26672f215e35 
+Oct 04 09:56:25.243 GENERAL: working_dir=/home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/Lab3/project-files/dynamips/c9c56dfa-5fe2-43fe-8285-26672f215e35
+Oct 04 09:56:25.243 HYPERVISOR: exec_cmd: vm create R2 2 c2691 
+Oct 04 09:56:25.243 VM: VM R2 created.
+Oct 04 09:56:25.243 HYPERVISOR: exec_cmd: vm set_con_tcp_port R2 5006 
+Oct 04 09:56:25.243 HYPERVISOR: exec_cmd: c2691 get_mac_addr R2 
+Oct 04 09:56:25.243 HYPERVISOR: exec_cmd: vm set_disk0 R2 0 
+Oct 04 09:56:25.244 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 04 09:56:25.244 HYPERVISOR: exec_cmd: vm set_idle_pc R2 0x60a48cb8 
+Oct 04 09:56:25.244 HYPERVISOR: exec_cmd: vm set_ios R2 /home/calum/GNS3/images/IOS/c2691-adventerprisek9-mz.124-25d.image 
+Oct 04 09:56:25.244 HYPERVISOR: exec_cmd: c2691 set_mac_addr R2 c002.3c60.0000 
+Oct 04 09:56:25.244 HYPERVISOR: exec_cmd: vm set_nvram R2 256 
+Oct 04 09:56:25.244 HYPERVISOR: exec_cmd: vm set_ram R2 192 
+Oct 04 09:56:25.662 HYPERVISOR: exec_cmd: nio create_udp udp-28e8f735-cf28-4813-b917-503cd9de2d9d 10012 127.0.0.1 10013 
+Oct 04 09:56:25.870 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 0 udp-28e8f735-cf28-4813-b917-503cd9de2d9d 
+Oct 04 09:56:25.870 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 04 09:56:25.904 HYPERVISOR: exec_cmd: nio create_udp udp-da2796b9-bb4a-4080-9be9-78ef627d40c4 10016 127.0.0.1 10017 
+Oct 04 09:56:25.905 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 1 udp-da2796b9-bb4a-4080-9be9-78ef627d40c4 
+Oct 04 09:56:25.905 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 04 10:03:25.348 HYPERVISOR: exec_cmd: vm set_ios R2 /home/calum/GNS3/images/IOS/c2691-adventerprisek9-mz.124-25d.image 
+Oct 04 10:03:42.829 HYPERVISOR: exec_cmd: vm set_ios R2 /home/calum/GNS3/images/IOS/c2691-adventerprisek9-mz.124-25d.image 
+Oct 04 10:03:46.738 HYPERVISOR: exec_cmd: vm set_ios R2 /home/calum/GNS3/images/IOS/c2691-adventerprisek9-mz.124-25d.image 
+Oct 04 10:10:09.813 HYPERVISOR: exec_cmd: vm set_ghost_status R2 2 
+Oct 04 10:10:09.813 HYPERVISOR: exec_cmd: vm set_ghost_file R2 /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/Lab3/project-files/dynamips/c2691-adventerprisek9-mz.124-25d.image-192.ghost 
+Oct 04 10:10:09.814 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 04 10:10:09.819 HYPERVISOR: exec_cmd: vm set_config R2 configs/i2_startup-config.cfg 
+Oct 04 10:10:09.820 HYPERVISOR: exec_cmd: vm start R2 
+Oct 04 10:36:40.278 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 04 10:36:40.314 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 04 10:38:37.472 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 04 10:38:37.472 HYPERVISOR: exec_cmd: vm stop R2 
+Oct 04 10:38:37.563 VM: VM R2 shutdown.
+Oct 04 10:38:37.564 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 04 10:40:03.135 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 04 10:40:03.136 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 04 10:40:03.472 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 04 10:40:03.473 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 04 10:40:03.474 HYPERVISOR: exec_cmd: vm delete R2 
+Oct 04 10:40:03.474 VM: VM R2 destroyed.
+Oct 04 10:40:03.475 HYPERVISOR: exec_cmd: hypervisor stop 
+Oct 04 10:40:03.956 HYPERVISOR: Stopped.
+Oct 04 10:40:03.956 GENERAL: reset done.

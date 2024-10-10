@@ -1,0 +1,66 @@
+Oct 07 15:43:22.925 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Oct 07 15:43:22.925 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 39975.
+Oct 07 15:43:22.933 HYPERVISOR: exec_cmd: hypervisor version 
+Oct 07 15:43:22.933 HYPERVISOR: exec_cmd: hypervisor working_dir /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips 
+Oct 07 15:43:22.933 GENERAL: working_dir=/home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips
+Oct 07 15:43:22.933 HYPERVISOR: exec_cmd: hypervisor working_dir /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/b3cb853d-298b-47b1-a936-43e09d9bc887 
+Oct 07 15:43:22.933 GENERAL: working_dir=/home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/b3cb853d-298b-47b1-a936-43e09d9bc887
+Oct 07 15:43:22.933 HYPERVISOR: exec_cmd: vm create R1 1 c2691 
+Oct 07 15:43:22.934 VM: VM R1 created.
+Oct 07 15:43:22.934 HYPERVISOR: exec_cmd: vm set_con_tcp_port R1 5015 
+Oct 07 15:43:22.934 HYPERVISOR: exec_cmd: c2691 get_mac_addr R1 
+Oct 07 15:43:22.934 HYPERVISOR: exec_cmd: vm set_disk0 R1 0 
+Oct 07 15:43:22.934 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:43:22.935 HYPERVISOR: exec_cmd: vm set_idle_pc R1 0x60a48cb8 
+Oct 07 15:43:22.935 HYPERVISOR: exec_cmd: vm set_ios R1 /home/calum/GNS3/images/IOS/c2691-adventerprisek9-mz.124-25d.image 
+Oct 07 15:43:22.935 HYPERVISOR: exec_cmd: c2691 set_mac_addr R1 c001.3c3e.0000 
+Oct 07 15:43:22.935 HYPERVISOR: exec_cmd: vm set_nvram R1 256 
+Oct 07 15:43:22.935 HYPERVISOR: exec_cmd: vm set_ram R1 192 
+Oct 07 15:43:23.125 HYPERVISOR: exec_cmd: nio create_udp udp-8d0078ff-1707-4ac9-a4d7-778d954e8de0 10006 127.0.0.1 10007 
+Oct 07 15:43:23.337 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 0 udp-8d0078ff-1707-4ac9-a4d7-778d954e8de0 
+Oct 07 15:43:23.338 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:43:23.376 HYPERVISOR: exec_cmd: nio create_udp udp-718c2f56-0af4-4907-945a-0e0d62790bfe 10010 127.0.0.1 10011 
+Oct 07 15:43:23.377 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 1 udp-718c2f56-0af4-4907-945a-0e0d62790bfe 
+Oct 07 15:43:23.377 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:43:30.631 HYPERVISOR: exec_cmd: vm create Ghost 0 c2691 
+Oct 07 15:43:30.631 VM: VM Ghost created.
+Oct 07 15:43:30.632 HYPERVISOR: exec_cmd: vm set_ios Ghost /home/calum/GNS3/images/IOS/c2691-adventerprisek9-mz.124-25d.image 
+Oct 07 15:43:30.632 HYPERVISOR: exec_cmd: vm set_ghost_status Ghost 1 
+Oct 07 15:43:30.635 HYPERVISOR: exec_cmd: vm set_ghost_file Ghost /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/c2691-adventerprisek9-mz.124-25d.image-192.ghost 
+Oct 07 15:43:30.635 HYPERVISOR: exec_cmd: vm set_ram Ghost 192 
+Oct 07 15:43:30.635 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Oct 07 15:43:30.635 HYPERVISOR: exec_cmd: vm set_config Ghost configs/i0_startup-config.cfg 
+Oct 07 15:43:30.636 HYPERVISOR: exec_cmd: vm start Ghost 
+Oct 07 15:43:30.949 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Oct 07 15:43:30.950 HYPERVISOR: exec_cmd: vm stop Ghost 
+Oct 07 15:43:31.053 VM: VM Ghost shutdown.
+Oct 07 15:43:31.054 HYPERVISOR: exec_cmd: vm extract_config Ghost 
+Oct 07 15:43:31.054 HYPERVISOR: exec_cmd: vm clean_delete Ghost 
+Oct 07 15:43:31.055 VM: VM Ghost destroyed.
+Oct 07 15:43:31.056 HYPERVISOR: exec_cmd: vm set_ghost_status R1 2 
+Oct 07 15:43:31.056 HYPERVISOR: exec_cmd: vm set_ghost_file R1 /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/c2691-adventerprisek9-mz.124-25d.image-192.ghost 
+Oct 07 15:43:31.057 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:43:31.057 HYPERVISOR: exec_cmd: vm set_config R1 configs/i1_startup-config.cfg 
+Oct 07 15:43:31.058 HYPERVISOR: exec_cmd: vm start R1 
+Oct 07 15:54:08.960 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:54:08.961 HYPERVISOR: exec_cmd: vm stop R1 
+Oct 07 15:54:09.044 VM: VM R1 shutdown.
+Oct 07 15:54:09.045 HYPERVISOR: exec_cmd: vm extract_config R1 
+Oct 07 15:54:13.238 HYPERVISOR: exec_cmd: vm set_ghost_status R1 2 
+Oct 07 15:54:13.238 HYPERVISOR: exec_cmd: vm set_ghost_file R1 /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/c2691-adventerprisek9-mz.124-25d.image-192.ghost 
+Oct 07 15:54:13.239 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:54:13.241 HYPERVISOR: exec_cmd: vm set_config R1 configs/i1_startup-config.cfg 
+Oct 07 15:54:13.242 HYPERVISOR: exec_cmd: vm start R1 
+Oct 07 15:54:48.819 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:54:48.819 HYPERVISOR: exec_cmd: vm stop R1 
+Oct 07 15:54:48.915 VM: VM R1 shutdown.
+Oct 07 15:54:48.916 HYPERVISOR: exec_cmd: vm extract_config R1 
+Oct 07 15:56:09.276 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:56:09.276 HYPERVISOR: exec_cmd: vm extract_config R1 
+Oct 07 15:56:09.458 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 07 15:56:09.459 HYPERVISOR: exec_cmd: vm extract_config R1 
+Oct 07 15:56:09.460 HYPERVISOR: exec_cmd: vm delete R1 
+Oct 07 15:56:09.460 VM: VM R1 destroyed.
+Oct 07 15:56:09.461 HYPERVISOR: exec_cmd: hypervisor stop 
+Oct 07 15:56:09.683 HYPERVISOR: Stopped.
+Oct 07 15:56:09.683 GENERAL: reset done.

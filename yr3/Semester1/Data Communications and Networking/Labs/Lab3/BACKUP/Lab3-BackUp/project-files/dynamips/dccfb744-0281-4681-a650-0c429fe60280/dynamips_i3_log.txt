@@ -1,0 +1,51 @@
+Oct 07 15:43:22.951 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Oct 07 15:43:22.951 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 59457.
+Oct 07 15:43:22.959 HYPERVISOR: exec_cmd: hypervisor version 
+Oct 07 15:43:22.959 HYPERVISOR: exec_cmd: hypervisor working_dir /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips 
+Oct 07 15:43:22.959 GENERAL: working_dir=/home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips
+Oct 07 15:43:22.959 HYPERVISOR: exec_cmd: hypervisor working_dir /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/f7f7cb09-20ce-414e-89c5-3c12e97e0e36 
+Oct 07 15:43:22.959 GENERAL: working_dir=/home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/f7f7cb09-20ce-414e-89c5-3c12e97e0e36
+Oct 07 15:43:22.959 HYPERVISOR: exec_cmd: vm create R2 2 c2691 
+Oct 07 15:43:22.960 VM: VM R2 created.
+Oct 07 15:43:22.960 HYPERVISOR: exec_cmd: vm set_con_tcp_port R2 5016 
+Oct 07 15:43:22.960 HYPERVISOR: exec_cmd: c2691 get_mac_addr R2 
+Oct 07 15:43:22.960 HYPERVISOR: exec_cmd: vm set_disk0 R2 0 
+Oct 07 15:43:22.960 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:43:22.960 HYPERVISOR: exec_cmd: vm set_idle_pc R2 0x60a48cb8 
+Oct 07 15:43:22.960 HYPERVISOR: exec_cmd: vm set_ios R2 /home/calum/GNS3/images/IOS/c2691-adventerprisek9-mz.124-25d.image 
+Oct 07 15:43:22.960 HYPERVISOR: exec_cmd: c2691 set_mac_addr R2 c002.3c60.0000 
+Oct 07 15:43:22.961 HYPERVISOR: exec_cmd: vm set_nvram R2 256 
+Oct 07 15:43:22.961 HYPERVISOR: exec_cmd: vm set_ram R2 192 
+Oct 07 15:43:23.382 HYPERVISOR: exec_cmd: nio create_udp udp-5a2832f9-4734-478c-91b9-4ef49b863088 10012 127.0.0.1 10013 
+Oct 07 15:43:23.594 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 0 udp-5a2832f9-4734-478c-91b9-4ef49b863088 
+Oct 07 15:43:23.595 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:43:23.626 HYPERVISOR: exec_cmd: nio create_udp udp-2e1f7d70-5ded-47a0-a1e2-c41e7f3cee3e 10016 127.0.0.1 10017 
+Oct 07 15:43:23.627 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 1 udp-2e1f7d70-5ded-47a0-a1e2-c41e7f3cee3e 
+Oct 07 15:43:23.627 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:43:31.057 HYPERVISOR: exec_cmd: vm set_ghost_status R2 2 
+Oct 07 15:43:31.058 HYPERVISOR: exec_cmd: vm set_ghost_file R2 /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/c2691-adventerprisek9-mz.124-25d.image-192.ghost 
+Oct 07 15:43:31.058 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:43:31.059 HYPERVISOR: exec_cmd: vm set_config R2 configs/i2_startup-config.cfg 
+Oct 07 15:43:31.060 HYPERVISOR: exec_cmd: vm start R2 
+Oct 07 15:54:09.048 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:54:09.048 HYPERVISOR: exec_cmd: vm stop R2 
+Oct 07 15:54:09.141 VM: VM R2 shutdown.
+Oct 07 15:54:09.142 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 07 15:54:13.463 HYPERVISOR: exec_cmd: vm set_ghost_status R2 2 
+Oct 07 15:54:13.464 HYPERVISOR: exec_cmd: vm set_ghost_file R2 /home/calum/University-Work/yr3/Semester1/Data Communications and Networking/Labs/Lab3/BACKUP/Lab3-BackUp/project-files/dynamips/c2691-adventerprisek9-mz.124-25d.image-192.ghost 
+Oct 07 15:54:13.464 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:54:13.465 HYPERVISOR: exec_cmd: vm set_config R2 configs/i2_startup-config.cfg 
+Oct 07 15:54:13.465 HYPERVISOR: exec_cmd: vm start R2 
+Oct 07 15:54:48.920 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:54:48.920 HYPERVISOR: exec_cmd: vm stop R2 
+Oct 07 15:54:49.012 VM: VM R2 shutdown.
+Oct 07 15:54:49.013 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 07 15:56:09.276 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:56:09.276 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 07 15:56:09.732 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 07 15:56:09.732 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 07 15:56:09.734 HYPERVISOR: exec_cmd: vm delete R2 
+Oct 07 15:56:09.734 VM: VM R2 destroyed.
+Oct 07 15:56:09.734 HYPERVISOR: exec_cmd: hypervisor stop 
+Oct 07 15:56:10.175 HYPERVISOR: Stopped.
+Oct 07 15:56:10.176 GENERAL: reset done.
